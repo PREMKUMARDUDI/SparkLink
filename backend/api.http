@@ -1,0 +1,91 @@
+POST http://localhost:9090/register HTTP/1.1
+content-Type: application/json
+
+{
+    "username" : "ds-3",
+    "password": "qwe",
+    "email": "ds3@gmail.com",
+    "name": "delta-student-3"
+}
+
+###
+
+POST http://localhost:9090/login HTTP/1.1
+content-Type: application/json
+
+{
+    "email": "ds2@gmail.com",
+    "password": "qw"
+}
+
+
+###
+
+GET http://localhost:9090/get_user_and_profile HTTP/1.1
+content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZjhhZjMyYjNkZTI1MzRkZWZjZTBiMSIsImlhdCI6MTc0NTA0MzU2MSwiZXhwIjoxNzQ1MTI5OTYxfQ.ZVMS7DOWoOqptcvqsfk01ePbksJc1fXaQU7DWwFReas"
+}
+
+
+
+###
+
+POST  http://localhost:9090/user_update HTTP/1.1
+content-Type: application/json
+
+{
+   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZjhhZjMyYjNkZTI1MzRkZWZjZTBiMSIsImlhdCI6MTc0NTA0MzU2MSwiZXhwIjoxNzQ1MTI5OTYxfQ.ZVMS7DOWoOqptcvqsfk01ePbksJc1fXaQU7DWwFReas",
+   "profilePicture": "default.jpg"
+}
+
+###
+
+GET http://localhost:9090/get_user_and_profile HTTP/1.1
+content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZjhhZjMyYjNkZTI1MzRkZWZjZTBiMSIsImlhdCI6MTc0NTA0MzU2MSwiZXhwIjoxNzQ1MTI5OTYxfQ.ZVMS7DOWoOqptcvqsfk01ePbksJc1fXaQU7DWwFReas"
+}
+
+###
+
+POST http://localhost:9090/update_profile_picture HTTP/1.1
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTJmMTVlNjQ0OWMwMDAwYTJlZWRiOCIsImlhdCI6MTc0ODc1Nzc4NiwiZXhwIjoxNzQ4ODQ0MTg2fQ.d1H6YtUbz87MNHlzITKygllBhwoMuwthV6blUZrwFiY",
+    "profilePicture": "default.jpg"
+}
+
+
+###
+
+POST  http://localhost:9090/update_profile_data HTTP/1.1
+content-Type: application/json
+
+{
+   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4M2JlYjFiMzRkYjM1NDQ0NjIzMTQ4MyIsImlhdCI6MTc0ODc1NzI5NCwiZXhwIjoxNzQ4ODQzNjk0fQ.7Rt9eY_fkGY7QH222kXrnmErHvfxs8Zl37HUc6gXI3I",
+   "bio": "Hey, I am Amit, a software engineer with a passion for coding and technology. I love to explore new technologies and work on innovative projects.",
+    "currentPost": "SDE",
+    "pastWork": [
+        {
+            "company": "Microsoft",
+            "position": "SDE",
+            "years": "2+ years"
+        }
+    ],
+    "education": [
+        {
+            "school" : "DPS",
+            "degree": "B.Tech",
+            "fieldOfStudy" : "2015 2019"
+        }
+    ]
+}
+
+
+###
+
+GET  http://localhost:9090/user/get_all_users HTTP/1.1

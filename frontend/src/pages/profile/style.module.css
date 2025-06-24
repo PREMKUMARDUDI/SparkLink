@@ -1,0 +1,411 @@
+.wrapper {
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  padding: 1.3rem;
+  padding-bottom: 5rem;
+  background: rgb(245, 245, 245);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.backDropContainer {
+  max-width: 100%;
+  min-height: 30vh;
+  background: url("https://images.unsplash.com/photo-1643654565157-4c7ab849669a?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTIxfHxsaW5rZWRpbiUyMGJhbm5lcnxlbnwwfHwwfHx8MA%3D%3D");
+  background-color: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  border-radius: 20px;
+}
+
+.backDrop img {
+  width: 6.5em;
+  height: 6.5em;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -30%;
+  left: 8%;
+  text-align: center;
+}
+
+.backDrop_overlay {
+  width: 6.5em;
+  height: 6.5em;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -30%;
+  left: 8%;
+  text-align: center;
+  z-index: 4;
+  transition: all 0.2s ease-in-out;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+    background: black;
+  }
+}
+
+.backDrop input {
+  width: 1rem;
+  position: absolute;
+  bottom: -13%;
+  left: 17%;
+  z-index: -2;
+  opacity: 0;
+}
+
+.profileContainer_details {
+  padding-top: 4rem;
+  padding-left: 3.7rem;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  margin-top: 0.5rem;
+}
+
+.card_profileContainer {
+  display: flex;
+}
+
+.card_profileContainer > img {
+  width: 3.4rem;
+  height: auto;
+  object-fit: cover;
+}
+
+.connectBtn {
+  padding-inline: 0.8rem;
+  padding-block: 0.3rem;
+  margin-bottom: 0.5rem;
+  background: rgb(3, 93, 183, 0.905);
+  outline: none;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.connectedButton {
+  padding-inline: 0.8rem;
+  padding-block: 0.3rem;
+  margin-bottom: 0.5rem;
+  background: rgb(230, 230, 230);
+  outline: none;
+  border: 1px solid rgb(3, 93, 183, 0.905);
+  color: rgb(3, 93, 183, 0.905);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.aboutUserContainer {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.workHistory {
+  padding-left: 4.2rem;
+}
+
+.workHistoryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  padding-top: 1.4rem;
+  width: 40%;
+  flex-wrap: wrap;
+}
+
+.workHistoryCard {
+  min-width: fit-content;
+  padding-inline: 2.5rem;
+  padding-block: 1rem;
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px 0px rgb(0, 0, 0, 0.1),
+    -2px -2px 15px rgb(218, 218, 218);
+}
+
+.addWorkButton {
+  border: 2px dashed silver;
+  padding: 1.7rem 5.7rem;
+  background: white;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.profileContainer_details input {
+  outline: none;
+  border-style: none;
+  background: rgb(245, 245, 245);
+  width: 90%;
+}
+
+.nameEdit {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.usernameEdit {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.profileUpdateButton {
+  width: fit-content;
+  padding-inline: 0.8rem;
+  padding-block: 0.3rem;
+  margin-bottom: 0.5rem;
+  background: rgb(3, 93, 183, 0.905);
+  outline: none;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.profileContainer_details textarea {
+  width: 100%;
+  overflow: hidden;
+  resize: none;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: rgb(245, 245, 245);
+  outline: none;
+  border: none;
+  font-family: "Poppins" !important;
+}
+
+.formContainer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background: rgb(0, 0, 0, 0.7);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputModalContainer {
+  width: 40vw;
+  height: fit-content;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.inputField {
+  padding-inline: 1.3rem;
+  padding-block: 0.5rem;
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid silver;
+  width: 100%;
+}
+
+.allPostsContainer {
+  margin-top: 1rem;
+  padding-inline: 2.5rem;
+}
+
+.allPostsContainer h2 {
+  padding-left: 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.singleCard {
+  width: 90%;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 1px solid rgb(179, 179, 179);
+}
+
+.singleCard_profileContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.2rem;
+  padding-right: 3.4rem;
+}
+
+.singleCard_profileContainer > img {
+  width: 15%;
+  min-width: 2.5rem;
+  border-radius: 50%;
+}
+
+.singleCard_image {
+  width: 100%;
+  min-width: 13rem;
+  min-height: 8rem;
+  padding-top: 0.6rem;
+  height: fit-content;
+  overflow: hidden;
+}
+
+.singleCard_image > img {
+  width: 100%;
+  min-width: 15rem;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.optionsContainer {
+  display: flex;
+  padding-top: 0.5rem;
+  height: 20%;
+  width: 100%;
+}
+
+.singleOption_optionsContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.singleOption_optionsContainer > svg {
+  height: 100%;
+  width: 14%;
+  min-width: 1.5rem;
+  cursor: pointer;
+}
+
+.commentsContainer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  background: rgb(0, 0, 0, 0.7);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.allCommentsContainer {
+  width: 40%;
+  height: 80%;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  padding: 1.4rem;
+}
+
+.allComments {
+  flex: 0.8;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior: contain;
+  max-height: 80%;
+  padding-inline-end: 9rem;
+}
+
+.singleComment {
+  margin-bottom: 1.5rem;
+}
+
+.singleComment_profileContainer {
+  display: flex;
+  gap: 0.8rem;
+  padding-left: 1.2rem;
+  padding-bottom: 0.5rem;
+}
+
+.postCommentContainer {
+  flex: 0.2;
+  position: absolute;
+  bottom: 1.2rem;
+  left: 1.2rem;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.postCommentContainer > input {
+  flex: 0.9;
+  border: 1.5px solid rgba(192, 192, 192, 0.462);
+  border-radius: 8px;
+  padding: 0.5rem;
+  outline: none;
+
+  &:focus {
+    background-color: rgb(246, 246, 246);
+    border: 1.5px solid rgba(192, 192, 192);
+  }
+}
+
+.postCommentContainer_commentBtn {
+  flex: 0.1;
+  width: fit-content;
+  padding: 0.5rem;
+  font-size: 13px;
+  background: rgba(255, 166, 0, 0.799);
+  border: 1px solid white;
+  border-radius: 8px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+
+  &:active {
+    border: 1px solid rgba(192, 192, 192);
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .profile_details {
+    flex-direction: column;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .aboutUserContainer {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .allCommentsContainer,
+  .inputModalContainer {
+    width: 60%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .allCommentsContainer,
+  .inputModalContainer {
+    width: 80%;
+  }
+}

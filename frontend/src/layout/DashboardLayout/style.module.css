@@ -1,0 +1,159 @@
+.homeContainer {
+  display: flex;
+  margin-top: 4.6rem;
+}
+
+.homeContainer > div:nth-of-type(odd) {
+  flex: 0.2;
+  position: sticky;
+  top: 4rem;
+  align-self: flex-start;
+  height: 80vh;
+  z-index: 2;
+}
+
+.homeContainer > div:nth-of-type(even) {
+  flex: 0.6;
+}
+
+.homeContainer_leftBar {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: flex-start;
+  border-right: 1px solid rgb(223, 223, 223);
+}
+
+.sideBarOption {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  gap: 1rem;
+  padding-inline-start: 1.5rem;
+  cursor: pointer;
+  margin-bottom: 0.8rem;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.sideBarOption > svg {
+  height: 1.4em;
+}
+
+.homeContainer_extraContainer {
+  border-left: 1px solid rgb(223, 223, 223);
+  padding-left: 1rem;
+}
+
+.homeContainer_feedContainer {
+  padding-inline: 0.8rem;
+}
+
+.allUserProfile {
+  max-width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.userCard {
+  display: flex;
+  width: 100%;
+  gap: 0.7rem;
+  padding: 1rem;
+  cursor: pointer;
+  align-items: center;
+  box-shadow: 10px 10px 10px 0px rgb(0, 0, 0, 0.1),
+    -2px -2px 15px rgb(218, 218, 218);
+  border-radius: 15px;
+}
+
+.userCard_image {
+  width: 25%;
+  min-width: 2rem;
+  border-radius: 50%;
+}
+
+.mobileNavBar {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 7%;
+  position: fixed;
+  padding-block: 1.5rem;
+  border-top: 1px solid rgb(230, 230, 230);
+  display: none;
+  justify-content: space-around;
+  background: white;
+  align-items: center;
+}
+
+/* .singleNavItemHolder_mobileView {
+
+} */
+
+.mobileNavBar svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+@media only screen and (max-width: 1050px) {
+  .homeContainer > div:nth-child(1) {
+    flex: 0.25;
+  }
+
+  .homeContainer > div:nth-child(2) {
+    flex: 0.45;
+  }
+
+  .homeContainer > div:nth-child(3) {
+    flex: 0.3;
+  }
+}
+@media only screen and (max-width: 975px) {
+  .userCard p ~ p {
+    display: none;
+  }
+
+  .userCard {
+    gap: 0.3rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .homeContainer > div:nth-child(1) {
+    flex: 0.3;
+  }
+
+  .homeContainer > div:nth-child(2) {
+    flex: 0.7;
+  }
+
+  .homeContainer > div:nth-child(3) {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 645px) {
+  .homeContainer > div:nth-child(1) {
+    display: none;
+  }
+
+  .homeContainer > div:nth-child(2) {
+    flex: 1;
+  }
+
+  .homeContainer > div:nth-child(3) {
+    display: none;
+  }
+
+  .mobileNavBar {
+    display: flex;
+  }
+}

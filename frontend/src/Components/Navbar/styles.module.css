@@ -1,0 +1,30 @@
+.container {
+  padding-inline: 2rem;
+  padding-block: 1.2rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  background-color: white;
+}
+
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navBarOptionContainer {
+  display: flex;
+}
+
+.buttonJoin {
+  background: #526a6e;
+  border-radius: 10px;
+  padding-block: 0.5rem;
+  padding-inline: 1.2rem;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+}

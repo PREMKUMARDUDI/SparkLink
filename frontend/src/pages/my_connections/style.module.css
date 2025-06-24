@@ -1,0 +1,78 @@
+.allConnectionRequests {
+  max-width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.allAcceptedConnectionRequests {
+  max-width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.userCard {
+  display: flex;
+  width: 100%;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 10px 10px 10px 0px rgb(0, 0, 0, 0.1),
+    -2px -2px 15px rgb(218, 218, 218);
+  border-radius: 20px;
+}
+
+.userCard_left {
+  display: flex;
+  flex: 0.5;
+  gap: 1.2rem;
+  cursor: pointer;
+  align-items: center;
+}
+
+.userCard_right {
+  display: flex;
+  padding-left: 6rem;
+  align-items: flex-end;
+  flex: 0.5;
+  gap: 1.2rem;
+  cursor: pointer;
+  align-items: center;
+}
+
+.userCard_image {
+  width: 23%;
+  min-width: 3.5rem;
+  border-radius: 50%;
+}
+
+.acceptButton {
+  padding-inline: 0.8rem;
+  padding-block: 0.3rem;
+  margin-bottom: 0.5rem;
+  background: rgb(230, 230, 230);
+  outline: none;
+  border: 1px solid rgb(3, 93, 183, 0.905);
+  color: rgb(3, 93, 183, 0.905);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.rejectButton {
+  padding-inline: 0.8rem;
+  padding-block: 0.3rem;
+  margin-bottom: 0.5rem;
+  background: rgb(230, 230, 230);
+  outline: none;
+  border: 1px solid rgba(183, 18, 3, 0.905);
+  color: rgba(183, 18, 3, 0.905);
+  border-radius: 10px;
+  cursor: pointer;
+}
