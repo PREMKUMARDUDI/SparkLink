@@ -1,9 +1,6 @@
 # SparkLink - Professional Networking Platform
 
 [![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://sparklink-frontend.vercel.app/)
-[![Next.js](https://img.shields.io/badge/Next.js-15.2.5-blue)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.0-blue)](https://reactjs.org/)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-black)](https://github.com/PREMKUMARDUDI/SparkLink)
 
 A comprehensive full-stack professional networking platform built with modern web technologies, offering LinkedIn-like functionality for career networking, profile management, and professional content sharing.
 
