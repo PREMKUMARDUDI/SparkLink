@@ -29,8 +29,8 @@ A comprehensive full-stack professional networking platform built with modern we
 
 ```
 ┌─────────────────┐    HTTP/REST API    ┌─────────────────┐
-│   Next.js 15    │◄──────────────────►│   Express.js    │
-│   Frontend      │    (Axios Client)   │   Backend       │
+│   Next.js 15    │◄──────────────────► │   Express.js    │
+│   Frontend      │    (Axios Client)   │   Backend       │                         
 │   (React 19)    │                     │   (Node.js)     │
 └─────────────────┘                     └─────────────────┘
         │                                        │
