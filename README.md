@@ -30,7 +30,7 @@ A comprehensive full-stack professional networking platform built with modern we
 ```
 ┌─────────────────┐    HTTP/REST API    ┌─────────────────┐
 │   Next.js 15    │◄──────────────────► │   Express.js    │
-│   Frontend      │    (Axios Client)   │   Backend       │                         
+│   Frontend      │    (Axios Client)   │   Backend       │
 │   (React 19)    │                     │   (Node.js)     │
 └─────────────────┘                     └─────────────────┘
         │                                        │
@@ -202,6 +202,11 @@ The application is deployed with a modern cloud infrastructure:
 - **Frontend**: Vercel platform for optimal Next.js performance
 - **Backend**: Node.js hosting with environment configuration
 - **Database**: MongoDB Atlas for scalable data storage
+
+The application's frontend is deployed on **Vercel** with its backend deployed on **Render** platform:
+
+- **Frontend**: `https://sparklink-frontend.vercel.app/`
+- **Backend API**: `https://sparklink-qalk.onrender.com`
 
 ### Production Features
 
