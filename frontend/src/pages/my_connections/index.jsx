@@ -82,6 +82,10 @@ export default function MyConnectionsPage() {
                           className={styles.userCard_image}
                           src={`${BASE_URL}/${connection.userId.profilePicture}`}
                           alt=""
+                          onError={(e) => {
+                            e.target.onerror = null; // Prevents infinite loop if default also fails
+                            e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
+                          }}
                         />
                         <div className={styles.userInfo}>
                           <h2>{connection.userId.name}</h2>
@@ -116,6 +120,10 @@ export default function MyConnectionsPage() {
                           className={styles.userCard_image}
                           src={`${BASE_URL}/${connection.connectionId.profilePicture}`}
                           alt=""
+                          onError={(e) => {
+                            e.target.onerror = null; // Prevents infinite loop if default also fails
+                            e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
+                          }}
                         />
                         <div className={styles.userInfo}>
                           <h2>{connection.connectionId.name}</h2>
@@ -164,6 +172,10 @@ export default function MyConnectionsPage() {
                           className={styles.userCard_image}
                           src={`${BASE_URL}/${connection.userId.profilePicture}`}
                           alt=""
+                          onError={(e) => {
+                            e.target.onerror = null; // Prevents infinite loop if default also fails
+                            e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
+                          }}
                         />
                         <div className={styles.userInfo}>
                           <h2>{connection.userId.name}</h2>

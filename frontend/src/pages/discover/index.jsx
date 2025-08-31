@@ -56,6 +56,10 @@ export default function DiscoverPage() {
                         className={styles.userCard_image}
                         src={`${BASE_URL}/${user.userId.profilePicture}`}
                         alt="User Profile"
+                        onError={(e) => {
+                          e.target.onerror = null; // Prevents infinite loop if default also fails
+                          e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
+                        }}
                       />
                       <div>
                         <h2>{user.userId.name}</h2>

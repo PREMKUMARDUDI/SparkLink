@@ -72,6 +72,10 @@ export default function Dashboard() {
                   className={styles.userProfile}
                   src={`${BASE_URL}/${authState.user?.userId?.profilePicture}`}
                   alt=""
+                  onError={(e) => {
+                    e.target.onerror = null; // Prevents infinite loop if default also fails
+                    e.target.src = `images/user-placeholder.jpg`; // Path to your fallback image
+                  }}
                 />
                 <textarea
                   onChange={(e) => setPostContent(e.target.value)}
@@ -128,6 +132,10 @@ export default function Dashboard() {
                             className={styles.userProfile}
                             src={`${BASE_URL}/${post.userId.profilePicture}`}
                             alt=""
+                            onError={(e) => {
+                              e.target.onerror = null; // Prevents infinite loop if default also fails
+                              e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
+                            }}
                           />
                           <div>
                             <div
@@ -316,6 +324,10 @@ export default function Dashboard() {
                                               width: "2.5rem",
                                               height: "2.5rem",
                                               borderRadius: "50%",
+                                            }}
+                                            onError={(e) => {
+                                              e.target.onerror = null; // Prevents infinite loop if default also fails
+                                              e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
                                             }}
                                           />
                                           <div>

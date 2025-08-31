@@ -127,6 +127,10 @@ export default function ViewProfilePage({ userProfile }) {
             <img
               src={`${BASE_URL}/${userProfile.userId.profilePicture}`}
               alt="backdrop"
+              onError={(e) => {
+                e.target.onerror = null; // Prevents infinite loop if default also fails
+                e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
+              }}
             />
           </div>
 
@@ -318,6 +322,10 @@ export default function ViewProfilePage({ userProfile }) {
                       className={styles.userProfile}
                       src={`${BASE_URL}/${post.userId.profilePicture}`}
                       alt=""
+                      onError={(e) => {
+                        e.target.onerror = null; // Prevents infinite loop if default also fails
+                        e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
+                      }}
                     />
                     <div>
                       <div
@@ -500,6 +508,10 @@ export default function ViewProfilePage({ userProfile }) {
                                         width: "2.5rem",
                                         height: "2.5rem",
                                         borderRadius: "50%",
+                                      }}
+                                      onError={(e) => {
+                                        e.target.onerror = null; // Prevents infinite loop if default also fails
+                                        e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
                                       }}
                                     />
                                     <div>

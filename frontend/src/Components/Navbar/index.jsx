@@ -49,6 +49,10 @@ export default function NavbarComponent() {
                   }}
                   src={`${BASE_URL}/${authState.user?.userId?.profilePicture}`}
                   alt="Profile"
+                  onError={(e) => {
+                    e.target.onerror = null; // Prevents infinite loop if default also fails
+                    e.target.src = `/images/user-placeholder.jpg`; // Path to your fallback image
+                  }}
                 />
               )}
               <p
