@@ -123,7 +123,7 @@ function LoginComponent() {
                   setPassword(e.target.value);
                 }}
                 ref={passwordRef}
-                type="text"
+                type="password"
                 placeholder="Password"
                 className={styles.inputField}
               />
