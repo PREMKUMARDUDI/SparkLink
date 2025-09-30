@@ -47,7 +47,9 @@ export default function MyConnectionsPage() {
             alignItems: "center",
           }}
         >
-          <h4 style={{ marginBottom: "0.5rem" }}>My Connections</h4>
+          <h4 style={{ marginBottom: "0.5rem", marginTop: "0.65rem" }}>
+            My Connections
+          </h4>
 
           {authState.connectionRequests.filter((connection) => {
             return connection.status_accepted === true;

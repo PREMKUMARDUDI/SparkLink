@@ -1,6 +1,7 @@
 .scrollComponent {
   display: flex;
   justify-content: center;
+  margin-top: 0.65rem;
 }
 
 .wrapper {

@@ -34,7 +34,9 @@ export default function DiscoverPage() {
             alignItems: "center",
           }}
         >
-          <h4 style={{ marginBottom: "0.5rem" }}>Discover</h4>
+          <h4 style={{ marginBottom: "0.5rem", marginTop: "0.65rem" }}>
+            Discover
+          </h4>
 
           <div className={styles.allUserProfile}>
             {authState.all_profiles_fetched &&
