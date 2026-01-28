@@ -28,17 +28,17 @@ A comprehensive full-stack professional networking platform built with modern we
 ### System Design
 
 ```
-┌─────────────────┐    HTTP/REST API    ┌─────────────────┐
-│   Next.js 15    │◄──────────────────► │   Express.js    │
-│   Frontend      │    (Axios Client)   │   Backend       │
-│   (React 19)    │                     │   (Node.js)     │
-└─────────────────┘                     └─────────────────┘
-        │                                        │
-        │                                        │
-   ┌────▼────┐                              ┌────▼────┐
-   │ Vercel  │                              │ MongoDB │
-   │ Hosting │                              │Database │
-   └─────────┘                              └─────────┘
+┌─────────────────┐       HTTP/REST API      ┌─────────────────┐
+│   Next.js       │   ◄──────────────────►   │   Express.js    │
+│   Frontend      │       (Axios Client)     │   Backend       │
+│   (React)       │                          │   (Node.js)     │
+└─────────────────┘                          └─────────────────┘
+        │                                            │
+        │                                            │
+   ┌────▼────┐                                  ┌────▼─────┐
+   │ Vercel  │                                  │ MongoDB  │
+   │ Hosting │                                  │ Database │
+   └─────────┘                                  └──────────┘
 ```
 
 ### Technology Stack
@@ -63,42 +63,42 @@ A comprehensive full-stack professional networking platform built with modern we
 
 ## 📁 Project Structure
 
-```
+```bash
 SparkLink/
-├── backend/                    # Express.js API server
-│   ├── controllers/            # Request handlers
-│   │   ├── user.controller.js  # User authentication & profile management
-│   │   └── posts.controller.js # Social posts and interactions
-│   ├── models/                 # MongoDB models
-│   │   ├── user.model.js      # User authentication model
-│   │   ├── profile.model.js   # Professional profile data
-│   │   ├── posts.model.js     # Social posts with media
-│   │   ├── comments.model.js  # Post comments system
-│   │   └── connections.model.js # Networking connections
-│   ├── routes/                # API route definitions
-│   │   ├── user.routes.js     # User-related endpoints
-│   │   └── posts.routes.js    # Posts and social features
-│   ├── uploads/               # File storage directory
-│   ├── util/                  # Utility functions
-│   ├── server.js              # Server entry point
-│   └── package.json           # Backend dependencies
-├── frontend/                  # Next.js application
+├── backend/                          # Express.js API server
+│   ├── controllers/                  # Request handlers
+│   │   ├── user.controller.js        # User authentication & profile management
+│   │   └── posts.controller.js       # Social posts and interactions
+│   ├── models/                       # MongoDB models
+│   │   ├── user.model.js             # User authentication model
+│   │   ├── profile.model.js          # Professional profile data
+│   │   ├── posts.model.js            # Social posts with media
+│   │   ├── comments.model.js         # Post comments system
+│   │   └── connections.model.js      # Networking connections
+│   ├── routes/                       # API route definitions
+│   │   ├── user.routes.js            # User-related endpoints
+│   │   └── posts.routes.js           # Posts and social features
+│   ├── uploads/                      # File storage directory
+│   ├── util/                         # Utility functions
+│   ├── server.js                     # Server entry point
+│   └── package.json                  # Backend dependencies
+├── frontend/                         # Next.js application
 │   ├── src/
-│   │   ├── pages/             # Next.js pages
-│   │   │   ├── login/         # Authentication pages
-│   │   │   ├── dashboard/     # Main dashboard interface
-│   │   │   ├── profile/       # Profile management
-│   │   │   ├── discover/      # User discovery
-│   │   │   ├── my_connections/# Connection management
-│   │   │   ├── blog/          # Social posts section
-│   │   │   └── view_profile/  # Other user profiles
-│   │   ├── Components/        # Reusable React components
-│   │   ├── config/            # Configuration files
-│   │   ├── layout/            # Layout components
-│   │   └── styles/            # CSS styling
-│   ├── public/                # Static assets
-│   ├── next.config.mjs        # Next.js configuration
-│   └── package.json           # Frontend dependencies
+│   │   ├── pages/                    # Next.js pages
+│   │   │   ├── login/                # Authentication pages
+│   │   │   ├── dashboard/            # Main dashboard interface
+│   │   │   ├── profile/              # Profile management
+│   │   │   ├── discover/             # User discovery
+│   │   │   ├── my_connections/       # Connection management
+│   │   │   ├── blog/                 # Social posts section
+│   │   │   └── view_profile/         # Other user profiles
+│   │   ├── Components/               # Reusable React components
+│   │   ├── config/                   # Configuration files
+│   │   ├── layout/                   # Layout components
+│   │   └── styles/                   # CSS styling
+│   ├── public/                       # Static assets
+│   ├── next.config.mjs               # Next.js configuration
+│   └── package.json                  # Frontend dependencies
 └── README.md
 ```
 
