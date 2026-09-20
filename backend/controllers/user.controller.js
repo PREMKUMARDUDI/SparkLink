@@ -94,15 +94,18 @@ export const login = async (req, res, next) => {
     user.token = token;
     await user.save();
 
-    setTimeout(async () => {
-      try {
-        user.token = null; // or undefined, depending on your preference
-        await user.save();
-        console.log(`Token removed for user ${user._id}`);
-      } catch (err) {
-        console.error(`Failed to remove token: ${err.message}`);
-      }
-    }, 1 * 24 * 60 * 60 * 1000);
+    setTimeout(
+      async () => {
+        try {
+          user.token = null; // or undefined, depending on your preference
+          await user.save();
+          console.log(`Token removed for user ${user._id}`);
+        } catch (err) {
+          console.error(`Failed to remove token: ${err.message}`);
+        }
+      },
+      1 * 24 * 60 * 60 * 1000,
+    );
 
     res.status(200).json({
       message: "User Logged In Successfully!",
@@ -173,7 +176,7 @@ export const getUserAndProfile = async (req, res) => {
 
     const userProfile = await Profile.findOne({ userId: user._id }).populate(
       "userId",
-      "name email username profilePicture"
+      "name email username profilePicture",
     );
 
     return res.json({ Profile: userProfile });
@@ -208,7 +211,7 @@ export const getAllUserProfile = async (req, res) => {
   try {
     const profiles = await Profile.find().populate(
       "userId",
-      "name email username profilePicture"
+      "name email username profilePicture",
     );
 
     if (!profiles)
@@ -220,7 +223,7 @@ export const getAllUserProfile = async (req, res) => {
   }
 };
 
-export const downloadProflie = async (req, res) => {
+export const downloadProfile = async (req, res) => {
   const user_id = req.query.id;
   const userProfile = await Profile.findOne({
     userId: user_id,
@@ -361,7 +364,7 @@ export const getUserProfileBasedOnUsername = async (req, res) => {
 
     const profile = await Profile.findOne({ userId: user._id }).populate(
       "userId",
-      "name email username profilePicture"
+      "name email username profilePicture",
     );
 
     return res.json({ profile });
