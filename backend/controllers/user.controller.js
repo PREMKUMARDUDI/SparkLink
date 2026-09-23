@@ -46,16 +46,25 @@ export const register = async (req, res, next) => {
       return res.status(400).json({ message: "All fields are required!" });
     }
 
-    const user = await User.findOne({ email });
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
 
-    if (user) return res.status(400).json({ message: "User already exists!" });
+    if (existingUser) {
+      if (existingUser.email === email) {
+        return res
+          .status(400)
+          .json({ message: "Email is already registered!" });
+      }
+      return res.status(400).json({ message: "Username is already taken!" });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
       username,
+      createdAt: new Date(),
     });
 
     await newUser.save();
@@ -64,9 +73,7 @@ export const register = async (req, res, next) => {
 
     await profile.save();
 
-    res.status(201).json({ message: "User Created!" });
-
-    next();
+    return res.status(201).json({ message: "User Created!" });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -82,7 +89,7 @@ export const login = async (req, res, next) => {
 
     const user = await User.findOne({ email });
 
-    if (!user) return res.status(404).json({ message: "User not found!" });
+    if (!user) return res.status(401).json({ message: "Invalid credentials!" });
 
     const isMatch = await bcrypt.compare(password, user.password);
 
@@ -94,26 +101,11 @@ export const login = async (req, res, next) => {
     user.token = token;
     await user.save();
 
-    setTimeout(
-      async () => {
-        try {
-          user.token = null; // or undefined, depending on your preference
-          await user.save();
-          console.log(`Token removed for user ${user._id}`);
-        } catch (err) {
-          console.error(`Failed to remove token: ${err.message}`);
-        }
-      },
-      1 * 24 * 60 * 60 * 1000,
-    );
-
-    res.status(200).json({
+    return res.status(200).json({
       message: "User Logged In Successfully!",
       success: true,
       token: token,
     });
-
-    next();
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -151,7 +143,7 @@ export const updateUserProfile = async (req, res) => {
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
 
     if (existingUser && String(existingUser._id) !== String(user._id)) {
-      return res.status(400).json("User already exists!");
+      return res.status(400).json({ message: "User already exists!" });
     }
 
     Object.assign(user, newUserData);
