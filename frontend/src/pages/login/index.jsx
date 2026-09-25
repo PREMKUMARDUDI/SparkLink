@@ -1,6 +1,6 @@
 import UserLayout from "@/layout/UserLayout";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./style.module.css";
 import { loginUser, registerUser } from "@/config/redux/action/authAction";
@@ -8,7 +8,6 @@ import { emptyMessage } from "@/config/redux/reducer/authReducer";
 
 function LoginComponent() {
   const router = useRouter();
-
   const dispatch = useDispatch();
 
   const [userLoginMethod, setUserLoginMethod] = useState(true);
@@ -20,43 +19,29 @@ function LoginComponent() {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
 
-  // Create refs for input fields
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const usernameRef = useRef(null);
-  const nameRef = useRef(null);
-
-  // Function to clear input fields
   const clearInputFields = () => {
-    if (emailRef.current) emailRef.current.value = "";
-    if (passwordRef.current) passwordRef.current.value = "";
-    if (usernameRef.current) usernameRef.current.value = "";
-    if (nameRef.current) nameRef.current.value = "";
-  };
-
-  useEffect(() => {
-    clearInputFields();
-
-    // Reset state variables
     setEmail("");
     setPassword("");
     setUsername("");
     setName("");
+  };
 
+  useEffect(() => {
+    clearInputFields();
     dispatch(emptyMessage());
-  }, [userLoginMethod]);
+  }, [userLoginMethod, dispatch]);
 
   useEffect(() => {
     if (authState.isLoggedIn) {
       router.push("/dashboard");
     }
-  }, [authState.isLoggedIn]);
+  }, [authState.isLoggedIn, router]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       router.push("/dashboard");
     }
-  });
+  }, [router]);
 
   const handleRegister = () => {
     console.log("Registering...");
@@ -72,11 +57,21 @@ function LoginComponent() {
     clearInputFields();
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (userLoginMethod) {
+      handleLogin();
+    } else {
+      handleRegister();
+    }
+  };
+
   return (
     <UserLayout>
       <div className={styles.container}>
         <div className={styles.cardContainer}>
-          <div className={styles.cardContainer_left}>
+          <form onSubmit={handleSubmit} className={styles.cardContainer_left}>
             <p className={styles.cardLeft_heading}>
               {userLoginMethod ? "Sign In" : "Sign Up"}
             </p>
@@ -92,7 +87,7 @@ function LoginComponent() {
                     onChange={(e) => {
                       setName(e.target.value);
                     }}
-                    ref={nameRef}
+                    value={name}
                     type="text"
                     placeholder="Name"
                     className={styles.inputField}
@@ -101,7 +96,7 @@ function LoginComponent() {
                     onChange={(e) => {
                       setUsername(e.target.value);
                     }}
-                    ref={usernameRef}
+                    value={username}
                     type="text"
                     placeholder="Username"
                     className={styles.inputField}
@@ -113,35 +108,28 @@ function LoginComponent() {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
-                ref={emailRef}
-                type="text"
+                value={email}
+                type="email"
                 placeholder="Email"
                 className={styles.inputField}
+                required
               />
               <input
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
-                ref={passwordRef}
+                value={password}
                 type="password"
                 placeholder="Password"
                 className={styles.inputField}
+                required
               />
 
-              <div
-                onClick={() => {
-                  if (userLoginMethod) {
-                    handleLogin();
-                  } else {
-                    handleRegister();
-                  }
-                }}
-                className={styles.buttonWithOutline}
-              >
-                <p>{userLoginMethod ? "Sign In" : "Sign Up"}</p>
-              </div>
+              <button type="submit" className={styles.buttonWithOutline}>
+                {userLoginMethod ? "Sign In" : "Sign Up"}
+              </button>
             </div>
-          </div>
+          </form>
           <div className={styles.cardContainer_right}>
             <p>
               {userLoginMethod
@@ -149,15 +137,15 @@ function LoginComponent() {
                 : "Already Have an Account?"}
             </p>
 
-            <div
+            <button
               onClick={() => {
                 setUserLoginMethod(!userLoginMethod);
               }}
               style={{ color: "black", textAlign: "center" }}
               className={styles.buttonWithOutline}
             >
-              <p>{userLoginMethod ? "Sign Up" : "Sign In"}</p>
-            </div>
+              {userLoginMethod ? "Sign Up" : "Sign In"}
+            </button>
           </div>
         </div>
       </div>
