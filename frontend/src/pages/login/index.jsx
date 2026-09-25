@@ -60,6 +60,10 @@ function LoginComponent() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     if (userLoginMethod) {
       handleLogin();
     } else {
@@ -91,6 +95,7 @@ function LoginComponent() {
                     type="text"
                     placeholder="Name"
                     className={styles.inputField}
+                    required
                   />
                   <input
                     onChange={(e) => {
@@ -100,6 +105,7 @@ function LoginComponent() {
                     type="text"
                     placeholder="Username"
                     className={styles.inputField}
+                    required
                   />
                 </div>
               )}
