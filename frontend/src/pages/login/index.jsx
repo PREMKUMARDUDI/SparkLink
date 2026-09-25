@@ -11,6 +11,7 @@ function LoginComponent() {
   const dispatch = useDispatch();
 
   const [userLoginMethod, setUserLoginMethod] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const authState = useSelector((state) => state.auth);
 
@@ -28,6 +29,7 @@ function LoginComponent() {
 
   useEffect(() => {
     clearInputFields();
+    setShowPassword(false);
     dispatch(emptyMessage());
   }, [userLoginMethod, dispatch]);
 
@@ -97,6 +99,7 @@ function LoginComponent() {
                     className={styles.inputField}
                     required
                   />
+
                   <input
                     onChange={(e) => {
                       setUsername(e.target.value);
@@ -120,16 +123,39 @@ function LoginComponent() {
                 className={styles.inputField}
                 required
               />
-              <input
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                value={password}
-                type="password"
-                placeholder="Password"
-                className={styles.inputField}
-                required
-              />
+
+              <div style={{ position: "relative", width: "100%" }}>
+                <input
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  className={styles.inputField}
+                  required
+                />
+
+                {password.length > 0 && (
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: "absolute",
+                      right: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                      fontSize: "12px",
+                      userSelect: "none",
+                      color: "#666",
+                    }}
+                  >
+                    {showPassword ? (
+                      <i class="fa-solid fa-eye"></i>
+                    ) : (
+                      <i class="fa-solid fa-eye-slash"></i>
+                    )}
+                  </span>
+                )}
+              </div>
 
               <button type="submit" className={styles.buttonWithOutline}>
                 {userLoginMethod ? "Sign In" : "Sign Up"}
