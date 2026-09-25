@@ -139,11 +139,12 @@ function LoginComponent() {
                     onClick={() => setShowPassword(!showPassword)}
                     style={{
                       position: "absolute",
-                      right: "10px",
+                      right: "1rem",
+                      marginLeft: "1rem",
                       top: "50%",
                       transform: "translateY(-50%)",
                       cursor: "pointer",
-                      fontSize: "12px",
+                      fontSize: "14px",
                       userSelect: "none",
                       color: "#666",
                     }}
