@@ -132,6 +132,7 @@ function LoginComponent() {
                   placeholder="Password"
                   className={styles.inputField}
                   required
+                  style={{ paddingRight: "3rem" }}
                 />
 
                 {password.length > 0 && (
@@ -140,7 +141,6 @@ function LoginComponent() {
                     style={{
                       position: "absolute",
                       right: "1rem",
-                      marginLeft: "1rem",
                       top: "50%",
                       transform: "translateY(-50%)",
                       cursor: "pointer",
