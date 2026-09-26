@@ -228,47 +228,77 @@ export const downloadProfile = async (req, res) => {
 
 export const sendConnectionRequest = async (req, res) => {
   const { token, connectionId } = req.body;
+
   try {
     const user = await User.findOne({ token: token });
-
     if (!user) return res.status(404).json({ message: "User not found!" });
 
     const connectionUser = await User.findOne({ _id: connectionId });
-
     if (!connectionUser) {
-      return res.status(404).json({ message: "Connection User not found!" });
+      return res.status(404).json({ message: "Target user not found!" });
     }
 
-    const rejectedRequest = await ConnectionRequest.findOne({
-      userId: user._id,
-      connectionId: connectionUser._id,
-      status_accepted: false,
+    if (user._id.toString() === connectionId.toString()) {
+      return res
+        .status(400)
+        .json({ message: "You cannot send a connection request to yourself!" });
+    }
+
+    const existingRequest = await ConnectionRequest.findOne({
+      $or: [
+        { userId: user._id, connectionId: connectionUser._id },
+        { userId: connectionUser._id, connectionId: user._id },
+      ],
     });
 
-    if (rejectedRequest) {
-      rejectedRequest.status_accepted = null; // Reset the status to null
-      await rejectedRequest.save();
-    } else {
-      const existingRequest = await ConnectionRequest.findOne({
-        userId: user._id,
-        connectionId: connectionUser._id,
-      });
+    if (existingRequest) {
+      const isSender =
+        existingRequest.userId.toString() === user._id.toString();
 
-      if (existingRequest) {
+      // Case A: Users are already connected
+      if (existingRequest.status_accepted === true) {
         return res
           .status(400)
-          .json({ message: "Connection request already sent!" });
+          .json({ message: "You are already connected with this user!" });
       }
 
-      const request = new ConnectionRequest({
-        userId: user._id,
-        connectionId: connectionUser._id,
-      });
+      // Case B: There is an active pending request
+      if (existingRequest.status_accepted === null) {
+        if (isSender) {
+          return res.status(400).json({
+            message: "Connection request already sent and is pending!",
+          });
+        } else {
+          return res.status(400).json({
+            message:
+              "This user has already sent you a request. Please accept it instead!",
+          });
+        }
+      }
 
-      await request.save();
+      // Case C: The request was previously rejected
+      if (existingRequest.status_accepted === false) {
+        if (isSender) {
+          existingRequest.status_accepted = null;
+          await existingRequest.save();
+          return res.status(200).json({ message: "Request Sent!" });
+        } else {
+          existingRequest.userId = user._id;
+          existingRequest.connectionId = connectionUser._id;
+          existingRequest.status_accepted = null;
+          await existingRequest.save();
+          return res.status(200).json({ message: "Request Sent!" });
+        }
+      }
     }
 
-    return res.json({ message: "Request Sent!" });
+    const newRequest = new ConnectionRequest({
+      userId: user._id,
+      connectionId: connectionUser._id,
+    });
+    await newRequest.save();
+
+    return res.status(201).json({ message: "Request Sent!" });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -288,7 +318,7 @@ export const getConnectionRequests = async (req, res) => {
       userId: user._id,
     }).populate("connectionId", "name email username profilePicture");
 
-    return res.json({ connections });
+    return res.status(200).json({ connections });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -308,7 +338,7 @@ export const whatAreMyConnections = async (req, res) => {
       connectionId: user._id,
     }).populate("userId", "name email username profilePicture");
 
-    return res.json({ connections });
+    return res.status(200).json({ connections });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -338,7 +368,9 @@ export const acceptConnectionRequest = async (req, res) => {
 
     await connection.save();
 
-    return res.json({ message: "Connection request updated!" });
+    return res.status(200).json({
+      message: `Connection request ${action_type === "accept" ? "accepted" : "rejected"} successfully!`,
+    });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
@@ -359,7 +391,7 @@ export const getUserProfileBasedOnUsername = async (req, res) => {
       "name email username profilePicture",
     );
 
-    return res.json({ profile });
+    return res.status(200).json({ profile });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
