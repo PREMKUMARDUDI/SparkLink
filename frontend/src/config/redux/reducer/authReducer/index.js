@@ -53,8 +53,8 @@ const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.isLoggedIn = true;
-        state.message = "Login is successfull!";
-        state.user = action.payload;
+        state.user.isTokenThere = true;
+        state.message = action.payload?.message || "Login is successfull!";
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -73,7 +73,6 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.isLoggedIn = false;
         state.message = "Registration is successful, Please Login!";
-        state.user = action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;

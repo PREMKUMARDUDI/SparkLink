@@ -18,29 +18,29 @@ export const loginUser = createAsyncThunk(
         });
       }
 
-      return thunkAPI.fulfillWithValue(response.data.token);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 
 export const registerUser = createAsyncThunk(
   "user/register",
   async (user, thunkAPI) => {
     try {
-      const request = await clientServer.post("/register", {
+      const response = await clientServer.post("/register", {
         username: user.username,
         password: user.password,
         email: user.email,
         name: user.name,
       });
 
-      return thunkAPI.fulfillWithValue(request.data.token);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 
 export const getAboutUser = createAsyncThunk(
@@ -48,17 +48,17 @@ export const getAboutUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       console.log(user);
-      const request = await clientServer.get("get_user_and_profile", {
+      const response = await clientServer.get("get_user_and_profile", {
         params: {
           token: user.token,
         },
       });
 
-      return thunkAPI.fulfillWithValue(request.data);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 
 export const getAllUsers = createAsyncThunk(
@@ -71,7 +71,7 @@ export const getAllUsers = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 
 export const sendConnectionRequest = createAsyncThunk(
@@ -83,7 +83,7 @@ export const sendConnectionRequest = createAsyncThunk(
         {
           token: user.token,
           connectionId: user.user_id,
-        }
+        },
       );
 
       thunkAPI.dispatch(getConnectionRequests({ token: user.token }));
@@ -92,7 +92,7 @@ export const sendConnectionRequest = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 
 export const getConnectionRequests = createAsyncThunk(
@@ -109,7 +109,7 @@ export const getConnectionRequests = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 
 export const getMyConnections = createAsyncThunk(
@@ -126,7 +126,7 @@ export const getMyConnections = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
-  }
+  },
 );
 
 export const acceptConnectionRequest = createAsyncThunk(
@@ -139,7 +139,7 @@ export const acceptConnectionRequest = createAsyncThunk(
           token: user.token,
           requestId: user.connectionId,
           action_type: user.action_type,
-        }
+        },
       );
 
       thunkAPI.dispatch(getConnectionRequests({ token: user.token }));
@@ -149,5 +149,5 @@ export const acceptConnectionRequest = createAsyncThunk(
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
     }
-  }
+  },
 );
