@@ -131,7 +131,7 @@ export const uploadProfilePicture = async (req, res) => {
   }
 };
 
-export const updateUserProfile = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const { token, ...newUserData } = req.body;
 
@@ -199,7 +199,7 @@ export const updateProfileData = async (req, res) => {
   }
 };
 
-export const getAllUserProfile = async (req, res) => {
+export const getAllUserProfiles = async (req, res) => {
   try {
     const profiles = await Profile.find().populate(
       "userId",
@@ -304,7 +304,7 @@ export const sendConnectionRequest = async (req, res) => {
   }
 };
 
-export const getConnectionRequests = async (req, res) => {
+export const getSentConnectionRequests = async (req, res) => {
   const { token } = req.query;
 
   try {
@@ -324,7 +324,7 @@ export const getConnectionRequests = async (req, res) => {
   }
 };
 
-export const whatAreMyConnections = async (req, res) => {
+export const getReceivedConnectionRequests = async (req, res) => {
   const { token } = req.query;
 
   try {
