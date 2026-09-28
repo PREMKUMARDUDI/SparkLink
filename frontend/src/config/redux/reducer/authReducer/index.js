@@ -55,7 +55,7 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.isLoggedIn = true;
         state.isTokenThere = true;
-        state.message = action.payload?.message || "Login is successfull!";
+        state.message = "";
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -86,14 +86,12 @@ const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.profileFetched = true;
-        state.message = "Profile fetched successfully!";
         state.user = action.payload.Profile;
       })
       .addCase(getAllUsers.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.message = "All users fetched successfully!";
         state.all_profiles_fetched = true;
         state.all_users = action.payload.Profiles;
       })
@@ -101,31 +99,23 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.message = "Sent connection requests fetched successfully!";
         state.sentConnectionsRequests = action.payload.connections;
       })
       .addCase(getSentConnectionRequests.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message =
-          action.payload?.message ||
-          "Fetching of Sent connection requests failed!";
       })
       .addCase(getReceivedConnectionRequests.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.message = "Received connection requests fetched successfully!";
         state.receivedConnectionsRequests = action.payload.connections;
       })
       .addCase(getReceivedConnectionRequests.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message =
-          action.payload?.message ||
-          "Fetching of Received connection requests failed!";
       });
   },
 });
