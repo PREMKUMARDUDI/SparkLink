@@ -33,6 +33,10 @@ const authSlice = createSlice({
     emptyMessage: (state) => {
       state.message = "";
     },
+    setTokenIsThere: (state) => {
+      state.isTokenThere = true;
+      state.isLoggedIn = true;
+    },
     logout: (state) => {
       state.isTokenThere = false;
       state.isLoggedIn = false;
@@ -126,6 +130,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { reset, emptyMessage, logout } = authSlice.actions;
+export const { reset, emptyMessage, setTokenIsThere, logout } =
+  authSlice.actions;
 
 export default authSlice.reducer;
