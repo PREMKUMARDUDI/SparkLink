@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { reset } from "@/config/redux/reducer/authReducer";
+import { emptyMessage, reset } from "@/config/redux/reducer/authReducer";
 import { BASE_URL } from "@/config";
 
 export default function NavbarComponent() {
@@ -25,15 +25,6 @@ export default function NavbarComponent() {
         <div className={styles.navBarOptionContainer}>
           {authState.profileFetched && (
             <div style={{ display: "flex", gap: "1rem" }}>
-              {/* <p>Hey, {authState.user?.userId?.name}</p>
-              <p
-                onClick={() => {
-                  router.push("/profile");
-                }}
-                style={{ fontWeight: "bold", cursor: "pointer" }}
-              >
-                Profile
-              </p> */}
               {authState.user?.userId?.profilePicture && (
                 <img
                   onClick={() => {
@@ -58,6 +49,7 @@ export default function NavbarComponent() {
               <p
                 onClick={async () => {
                   localStorage.removeItem("token");
+                  dispatch(emptyMessage());
                   await dispatch(reset());
                   router.push("/login");
                 }}

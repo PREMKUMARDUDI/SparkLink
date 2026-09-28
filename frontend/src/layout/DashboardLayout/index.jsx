@@ -4,7 +4,11 @@ import { useRouter } from "next/router";
 import styles from "./style.module.css";
 import { BASE_URL } from "@/config";
 import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
-import { setTokenIsThere, logout } from "@/config/redux/reducer/authReducer";
+import {
+  emptyMessage,
+  setTokenIsThere,
+  logout,
+} from "@/config/redux/reducer/authReducer";
 
 export default function DashboardLayout({ children }) {
   const authState = useSelector((state) => state.auth);
@@ -13,6 +17,7 @@ export default function DashboardLayout({ children }) {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
+      dispatch(emptyMessage());
       dispatch(logout());
       router.push("/login");
     } else {
