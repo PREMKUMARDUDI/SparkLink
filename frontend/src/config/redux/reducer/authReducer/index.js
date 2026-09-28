@@ -27,7 +27,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    reset: () => initialState,
+    reset: (state) => {
+      return initialState;
+    },
     emptyMessage: (state) => {
       state.message = "";
     },
@@ -48,7 +50,7 @@ const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.isLoggedIn = true;
-        state.user.isTokenThere = true;
+        state.isTokenThere = true;
         state.message = action.payload?.message || "Login is successfull!";
       })
       .addCase(loginUser.rejected, (state, action) => {
