@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import styles from "./style.module.css";
+import { BASE_URL } from "@/config";
+import UserLayout from "@/layout/UserLayout";
+import DashboardLayout from "@/layout/DashboardLayout";
+import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
 import {
   createPost,
   deletePost,
@@ -9,11 +14,6 @@ import {
   incrementPostLike,
   postComment,
 } from "@/config/redux/action/postAction";
-import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
-import UserLayout from "@/layout/UserLayout";
-import DashboardLayout from "@/layout/DashboardLayout";
-import styles from "./style.module.css";
-import { BASE_URL } from "@/config";
 import { resetPostId } from "@/config/redux/reducer/postReducer";
 
 export default function Dashboard() {
@@ -43,19 +43,13 @@ export default function Dashboard() {
       createPost({
         file: fileContent,
         body: postContent,
-      })
+      }),
     );
 
     setPostContent("");
     setFileContent(null);
     dispatch(getAllPosts());
   };
-
-  // useState(() => {
-  //   setInterval(() => {
-  //     dispatch(getAllPosts());
-  //   }, 900);
-  // });
 
   if (authState.user) {
     return (
@@ -125,7 +119,7 @@ export default function Dashboard() {
                           <img
                             onClick={() => {
                               router.push(
-                                `/view_profile/${post.userId.username}`
+                                `/view_profile/${post.userId.username}`,
                               );
                             }}
                             style={{ cursor: "pointer" }}
@@ -148,7 +142,7 @@ export default function Dashboard() {
                               <p
                                 onClick={() => {
                                   router.push(
-                                    `/view_profile/${post.userId.username}`
+                                    `/view_profile/${post.userId.username}`,
                                   );
                                 }}
                                 style={{
@@ -164,7 +158,7 @@ export default function Dashboard() {
                                 <div
                                   onClick={async () => {
                                     await dispatch(
-                                      deletePost({ postId: post._id })
+                                      deletePost({ postId: post._id }),
                                     );
                                     await dispatch(getAllPosts());
                                   }}
@@ -191,7 +185,7 @@ export default function Dashboard() {
                             <p
                               onClick={() => {
                                 router.push(
-                                  `/view_profile/${post.userId.username}`
+                                  `/view_profile/${post.userId.username}`,
                                 );
                               }}
                               style={{
@@ -216,7 +210,7 @@ export default function Dashboard() {
                               <div
                                 onClick={async () => {
                                   await dispatch(
-                                    incrementPostLike({ postId: post._id })
+                                    incrementPostLike({ postId: post._id }),
                                   );
                                   await dispatch(getAllPosts());
                                 }}
@@ -241,7 +235,7 @@ export default function Dashboard() {
                               <div
                                 onClick={async () => {
                                   await dispatch(
-                                    getAllComments({ postId: post._id })
+                                    getAllComments({ postId: post._id }),
                                   );
                                 }}
                                 className={styles.singleOption_optionsContainer}
@@ -377,12 +371,12 @@ export default function Dashboard() {
                                       postComment({
                                         post_id: postState.postId,
                                         body: commentText,
-                                      })
+                                      }),
                                     );
                                     await dispatch(
                                       getAllComments({
                                         postId: postState.postId,
-                                      })
+                                      }),
                                     );
                                     setCommentText("");
                                   }}

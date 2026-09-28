@@ -48,7 +48,7 @@ export const getAboutUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       console.log(user);
-      const response = await clientServer.get("get_user_and_profile", {
+      const response = await clientServer.get("/get_user_and_profile", {
         params: {
           token: user.token,
         },
@@ -65,7 +65,7 @@ export const getAllUsers = createAsyncThunk(
   "user/getAllUsers",
   async (_, thunkAPI) => {
     try {
-      const response = await clientServer.get("/user/get_all_users");
+      const response = await clientServer.get("/get_all_users");
 
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
@@ -86,7 +86,7 @@ export const sendConnectionRequest = createAsyncThunk(
         },
       );
 
-      thunkAPI.dispatch(getConnectionRequests({ token: user.token }));
+      thunkAPI.dispatch(getSentConnectionRequests({ token: user.token }));
 
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
@@ -95,15 +95,18 @@ export const sendConnectionRequest = createAsyncThunk(
   },
 );
 
-export const getConnectionRequests = createAsyncThunk(
-  "user/getConnectionRequests",
+export const getSentConnectionRequests = createAsyncThunk(
+  "user/getSentConnectionRequests",
   async (user, thunkAPI) => {
     try {
-      const response = await clientServer.get("/user/getConnectionRequests", {
-        params: {
-          token: user.token,
+      const response = await clientServer.get(
+        "/user/get_sent_connection_requests",
+        {
+          params: {
+            token: user.token,
+          },
         },
-      });
+      );
 
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
@@ -112,15 +115,18 @@ export const getConnectionRequests = createAsyncThunk(
   },
 );
 
-export const getMyConnections = createAsyncThunk(
-  "user/getMyConnections",
+export const getReceivedConnectionRequests = createAsyncThunk(
+  "user/getReceivedConnectionRequests",
   async (user, thunkAPI) => {
     try {
-      const response = await clientServer.get("/user/getMyConnections", {
-        params: {
-          token: user.token,
+      const response = await clientServer.get(
+        "/user/get_received_connection_requests",
+        {
+          params: {
+            token: user.token,
+          },
         },
-      });
+      );
 
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {
@@ -142,8 +148,8 @@ export const acceptConnectionRequest = createAsyncThunk(
         },
       );
 
-      thunkAPI.dispatch(getConnectionRequests({ token: user.token }));
-      thunkAPI.dispatch(getMyConnections({ token: user.token }));
+      thunkAPI.dispatch(getSentConnectionRequests({ token: user.token }));
+      thunkAPI.dispatch(getReceivedConnectionRequests({ token: user.token }));
 
       return thunkAPI.fulfillWithValue(response.data);
     } catch (err) {

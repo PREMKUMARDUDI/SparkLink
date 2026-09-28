@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import styles from "./style.module.css";
-import { setTokenIsThere } from "@/config/redux/reducer/authReducer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
-import { BASE_URL } from "@/config";
 import { useRouter } from "next/router";
+import styles from "./style.module.css";
+import { BASE_URL } from "@/config";
+import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
+import { logout } from "@/config/redux/reducer/authReducer";
 
 export default function DashboardLayout({ children }) {
   const authState = useSelector((state) => state.auth);
@@ -13,16 +13,17 @@ export default function DashboardLayout({ children }) {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
+      dispatch(logout());
       router.push("/login");
     }
 
-    dispatch(setTokenIsThere());
     const fetchData = async () => {
       if (!authState.all_profiles_fetched) {
         await dispatch(getAllUsers());
         await dispatch(getAboutUser({ token: localStorage.getItem("token") }));
       }
     };
+
     fetchData();
   }, []);
 
@@ -107,7 +108,7 @@ export default function DashboardLayout({ children }) {
                 authState.all_users
                   .filter(
                     (user) =>
-                      authState.user?.userId?.username !== user.userId.username
+                      authState.user?.userId?.username !== user.userId.username,
                   )
                   .map((user) => {
                     return (

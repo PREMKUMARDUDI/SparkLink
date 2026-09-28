@@ -2,25 +2,25 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getAboutUser,
   getAllUsers,
-  getConnectionRequests,
-  getMyConnections,
+  getSentConnectionRequests,
+  getReceivedConnectionRequests,
   loginUser,
   registerUser,
 } from "../../action/authAction/index.js";
 
 const initialState = {
-  user: undefined,
   isError: false,
   isSuccess: false,
   isLoading: false,
   isLoggedIn: false,
-  message: "",
   isTokenThere: false,
+  message: "",
+  user: undefined,
   profileFetched: false,
-  connections: [],
-  connectionRequests: [],
   all_users: [],
   all_profiles_fetched: false,
+  sentConnectionsRequests: [],
+  receivedConnectionsRequests: [],
 };
 
 const authSlice = createSlice({
@@ -28,17 +28,12 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
-    handleLoginUser: (state) => {
-      state.message = "hello!";
-    },
     emptyMessage: (state) => {
       state.message = "";
     },
-    setTokenIsThere: (state) => {
-      state.isTokenThere = true;
-    },
-    setTokenIsNotThere: (state) => {
+    logout: (state) => {
       state.isTokenThere = false;
+      state.isLoggedIn = false;
     },
   },
 
@@ -96,38 +91,39 @@ const authSlice = createSlice({
         state.all_profiles_fetched = true;
         state.all_users = action.payload.Profiles;
       })
-      .addCase(getConnectionRequests.fulfilled, (state, action) => {
+      .addCase(getSentConnectionRequests.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.message = "Connection requests fetched successfully!";
-        state.connections = action.payload.connections;
+        state.message = "Sent connection requests fetched successfully!";
+        state.sentConnectionsRequests = action.payload.connections;
       })
-      .addCase(getConnectionRequests.rejected, (state, action) => {
+      .addCase(getSentConnectionRequests.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message =
-          action.payload?.message || "Fetching of Connection requests failed!";
+          action.payload?.message ||
+          "Fetching of Sent connection requests failed!";
       })
-      .addCase(getMyConnections.fulfilled, (state, action) => {
+      .addCase(getReceivedConnectionRequests.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.message = "My connections fetched successfully!";
-        state.connectionRequests = action.payload.connections;
+        state.message = "Received connection requests fetched successfully!";
+        state.receivedConnectionsRequests = action.payload.connections;
       })
-      .addCase(getMyConnections.rejected, (state, action) => {
+      .addCase(getReceivedConnectionRequests.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message =
-          action.payload?.message || "Fetching of My connections failed!";
+          action.payload?.message ||
+          "Fetching of Received connection requests failed!";
       });
   },
 });
 
-export const { reset, emptyMessage, setTokenIsThere, setTokenIsNotThere } =
-  authSlice.actions;
+export const { reset, emptyMessage, logout } = authSlice.actions;
 
 export default authSlice.reducer;

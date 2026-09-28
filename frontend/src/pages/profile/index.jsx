@@ -1,7 +1,14 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import styles from "./style.module.css";
+import { BASE_URL, clientServer } from "@/config";
+import UserLayout from "@/layout/UserLayout";
+import DashboardLayout from "@/layout/DashboardLayout";
 import {
   getAboutUser,
-  getConnectionRequests,
-  getMyConnections,
+  getSentConnectionRequests,
+  getReceivedConnectionRequests,
 } from "@/config/redux/action/authAction";
 import {
   deletePost,
@@ -11,13 +18,6 @@ import {
   postComment,
 } from "@/config/redux/action/postAction";
 import { resetPostId } from "@/config/redux/reducer/postReducer";
-import DashboardLayout from "@/layout/DashboardLayout";
-import UserLayout from "@/layout/UserLayout";
-import React, { use, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./style.module.css";
-import { BASE_URL, clientServer } from "@/config";
-import { useRouter } from "next/router";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -58,9 +58,11 @@ export default function ProfilePage() {
     await dispatch(getAllPosts());
     await dispatch(getAboutUser({ token: localStorage.getItem("token") }));
     await dispatch(
-      getConnectionRequests({ token: localStorage.getItem("token") })
+      getSentConnectionRequests({ token: localStorage.getItem("token") }),
     );
-    await dispatch(getMyConnections({ token: localStorage.getItem("token") }));
+    await dispatch(
+      getReceivedConnectionRequests({ token: localStorage.getItem("token") }),
+    );
   };
 
   useEffect(() => {
@@ -89,7 +91,7 @@ export default function ProfilePage() {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
+      },
     );
 
     dispatch(getAboutUser({ token: localStorage.getItem("token") }));
@@ -206,7 +208,7 @@ export default function ProfilePage() {
                         }}
                         rows={Math.max(
                           3,
-                          Math.ceil(userProfile.bio.length / 35)
+                          Math.ceil(userProfile.bio.length / 35),
                         )}
                       ></textarea>
                     </div>
@@ -341,7 +343,7 @@ export default function ProfilePage() {
                         <img
                           onClick={() => {
                             router.push(
-                              `/view_profile/${post.userId.username}`
+                              `/view_profile/${post.userId.username}`,
                             );
                           }}
                           style={{ cursor: "pointer" }}
@@ -364,7 +366,7 @@ export default function ProfilePage() {
                             <p
                               onClick={() => {
                                 router.push(
-                                  `/view_profile/${post.userId.username}`
+                                  `/view_profile/${post.userId.username}`,
                                 );
                               }}
                               style={{
@@ -380,7 +382,7 @@ export default function ProfilePage() {
                               <div
                                 onClick={async () => {
                                   await dispatch(
-                                    deletePost({ postId: post._id })
+                                    deletePost({ postId: post._id }),
                                   );
                                   await dispatch(getAllPosts());
                                 }}
@@ -407,7 +409,7 @@ export default function ProfilePage() {
                           <p
                             onClick={() => {
                               router.push(
-                                `/view_profile/${post.userId.username}`
+                                `/view_profile/${post.userId.username}`,
                               );
                             }}
                             style={{
@@ -432,7 +434,7 @@ export default function ProfilePage() {
                             <div
                               onClick={async () => {
                                 await dispatch(
-                                  incrementPostLike({ postId: post._id })
+                                  incrementPostLike({ postId: post._id }),
                                 );
                                 await dispatch(getAllPosts());
                               }}
@@ -457,7 +459,7 @@ export default function ProfilePage() {
                             <div
                               onClick={async () => {
                                 await dispatch(
-                                  getAllComments({ postId: post._id })
+                                  getAllComments({ postId: post._id }),
                                 );
                               }}
                               className={styles.singleOption_optionsContainer}
@@ -591,12 +593,12 @@ export default function ProfilePage() {
                                     postComment({
                                       post_id: postState.postId,
                                       body: commentText,
-                                    })
+                                    }),
                                   );
                                   await dispatch(
                                     getAllComments({
                                       postId: postState.postId,
-                                    })
+                                    }),
                                   );
                                   setCommentText("");
                                 }}

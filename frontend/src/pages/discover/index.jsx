@@ -1,11 +1,11 @@
-import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
-import DashboardLayout from "@/layout/DashboardLayout";
-import UserLayout from "@/layout/UserLayout";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import styles from "./style.module.css";
 import { BASE_URL } from "@/config";
-import { useRouter } from "next/router";
+import UserLayout from "@/layout/UserLayout";
+import DashboardLayout from "@/layout/DashboardLayout";
+import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
 
 export default function DiscoverPage() {
   const authState = useSelector((state) => state.auth);
@@ -43,7 +43,7 @@ export default function DiscoverPage() {
               authState.all_users
                 .filter(
                   (user) =>
-                    authState.user?.userId.username !== user.userId.username
+                    authState.user?.userId.username !== user.userId.username,
                 )
                 .map((user) => {
                   return (

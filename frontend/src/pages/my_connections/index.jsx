@@ -1,15 +1,15 @@
-import { BASE_URL } from "@/config";
-import {
-  acceptConnectionRequest,
-  getConnectionRequests,
-  getMyConnections,
-} from "@/config/redux/action/authAction";
-import DashboardLayout from "@/layout/DashboardLayout";
-import UserLayout from "@/layout/UserLayout";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./style.module.css";
 import { useRouter } from "next/router";
+import styles from "./style.module.css";
+import { BASE_URL } from "@/config";
+import UserLayout from "@/layout/UserLayout";
+import DashboardLayout from "@/layout/DashboardLayout";
+import {
+  acceptConnectionRequest,
+  getSentConnectionRequests,
+  getReceivedConnectionRequests,
+} from "@/config/redux/action/authAction";
 
 export default function MyConnectionsPage() {
   const dispatch = useDispatch();
@@ -20,20 +20,20 @@ export default function MyConnectionsPage() {
   useEffect(() => {
     const fetchConnections = async () => {
       await dispatch(
-        getMyConnections({ token: localStorage.getItem("token") })
+        getReceivedConnectionRequests({ token: localStorage.getItem("token") }),
       );
       await dispatch(
-        getConnectionRequests({ token: localStorage.getItem("token") })
+        getSentConnectionRequests({ token: localStorage.getItem("token") }),
       );
     };
     fetchConnections();
   }, []);
 
   useEffect(() => {
-    if (authState.connectionRequests.length !== 0) {
-      console.log("My Connections:", authState.connectionRequests);
+    if (authState.receivedConnectionsRequests.length !== 0) {
+      console.log("My Connections:", authState.receivedConnectionsRequests);
     }
-  }, [authState.connectionRequests]);
+  }, [authState.receivedConnectionsRequests]);
 
   return (
     <UserLayout>
@@ -51,10 +51,10 @@ export default function MyConnectionsPage() {
             My Connections
           </h4>
 
-          {authState.connectionRequests.filter((connection) => {
+          {authState.receivedConnectionsRequests.filter((connection) => {
             return connection.status_accepted === true;
           }).length === 0 &&
-            authState.connections.filter((connection) => {
+            authState.sentConnectionsRequests.filter((connection) => {
               return connection.status_accepted === true;
             }).length === 0 && (
               <div style={{ marginTop: "0.5rem", color: "gray" }}>
@@ -63,8 +63,8 @@ export default function MyConnectionsPage() {
             )}
 
           <div className={styles.allAcceptedConnectionRequests}>
-            {authState.connectionRequests.length !== 0 &&
-              authState.connectionRequests
+            {authState.receivedConnectionsRequests.length !== 0 &&
+              authState.receivedConnectionsRequests
                 .filter((connection) => {
                   return connection.status_accepted === true;
                 })
@@ -73,7 +73,7 @@ export default function MyConnectionsPage() {
                     <div
                       onClick={() => {
                         router.push(
-                          `/view_profile/${connection.userId.username}`
+                          `/view_profile/${connection.userId.username}`,
                         );
                       }}
                       className={styles.userCard}
@@ -101,8 +101,8 @@ export default function MyConnectionsPage() {
                   );
                 })}
 
-            {authState.connections.length !== 0 &&
-              authState.connections
+            {authState.sentConnectionsRequests.length !== 0 &&
+              authState.sentConnectionsRequests
                 .filter((connection) => {
                   return connection.status_accepted === true;
                 })
@@ -111,7 +111,7 @@ export default function MyConnectionsPage() {
                     <div
                       onClick={() => {
                         router.push(
-                          `/view_profile/${connection.connectionId.username}`
+                          `/view_profile/${connection.connectionId.username}`,
                         );
                       }}
                       className={styles.userCard}
@@ -144,7 +144,7 @@ export default function MyConnectionsPage() {
             Connection Requests
           </h4>
 
-          {authState.connectionRequests.filter((connection) => {
+          {authState.receivedConnectionsRequests.filter((connection) => {
             return connection.status_accepted === null;
           }).length === 0 && (
             <div style={{ color: "gray" }}>
@@ -153,8 +153,8 @@ export default function MyConnectionsPage() {
           )}
 
           <div className={styles.allConnectionRequests}>
-            {authState.connectionRequests.length !== 0 &&
-              authState.connectionRequests
+            {authState.receivedConnectionsRequests.length !== 0 &&
+              authState.receivedConnectionsRequests
                 .filter((connection) => {
                   return connection.status_accepted === null;
                 })
@@ -163,7 +163,7 @@ export default function MyConnectionsPage() {
                     <div
                       onClick={() => {
                         router.push(
-                          `/view_profile/${connection.userId.username}`
+                          `/view_profile/${connection.userId.username}`,
                         );
                       }}
                       className={styles.userCard}
@@ -195,7 +195,7 @@ export default function MyConnectionsPage() {
                                 token: localStorage.getItem("token"),
                                 connectionId: connection._id,
                                 action_type: "accept",
-                              })
+                              }),
                             );
                           }}
                           className={styles.acceptButton}
@@ -210,7 +210,7 @@ export default function MyConnectionsPage() {
                                 token: localStorage.getItem("token"),
                                 connectionId: connection._id,
                                 action_type: "reject",
-                              })
+                              }),
                             );
                           }}
                           className={styles.rejectButton}

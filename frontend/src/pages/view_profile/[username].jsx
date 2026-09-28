@@ -1,10 +1,16 @@
-import { BASE_URL, clientServer } from "@/config";
-import DashboardLayout from "@/layout/DashboardLayout";
-import UserLayout from "@/layout/UserLayout";
 import React, { useEffect, useState } from "react";
-import styles from "./style.module.css";
-import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import styles from "./style.module.css";
+import { BASE_URL, clientServer } from "@/config";
+import UserLayout from "@/layout/UserLayout";
+import DashboardLayout from "@/layout/DashboardLayout";
+import {
+  getAboutUser,
+  getSentConnectionRequests,
+  getReceivedConnectionRequests,
+  sendConnectionRequest,
+} from "@/config/redux/action/authAction";
 import {
   deletePost,
   getAllComments,
@@ -13,12 +19,6 @@ import {
   postComment,
 } from "@/config/redux/action/postAction";
 import { resetPostId } from "@/config/redux/reducer/postReducer";
-import {
-  getAboutUser,
-  getConnectionRequests,
-  getMyConnections,
-  sendConnectionRequest,
-} from "@/config/redux/action/authAction";
 
 export default function ViewProfilePage({ userProfile }) {
   const router = useRouter();
@@ -38,9 +38,11 @@ export default function ViewProfilePage({ userProfile }) {
     await dispatch(getAllPosts());
     await dispatch(getAboutUser({ token: localStorage.getItem("token") }));
     await dispatch(
-      getConnectionRequests({ token: localStorage.getItem("token") })
+      getSentConnectionRequests({ token: localStorage.getItem("token") }),
     );
-    await dispatch(getMyConnections({ token: localStorage.getItem("token") }));
+    await dispatch(
+      getReceivedConnectionRequests({ token: localStorage.getItem("token") }),
+    );
   };
 
   useEffect(() => {
@@ -64,16 +66,16 @@ export default function ViewProfilePage({ userProfile }) {
 
     // 1. Check if there is any accepted connection (in either array)
     const acceptedConnection =
-      authState.connections.find(
+      authState.sentConnectionRequests.find(
         (conn) =>
           conn.connectionId._id === userProfileId &&
-          conn.status_accepted === true
+          conn.status_accepted === true,
       ) ||
-      authState.connectionRequests.find(
+      authState.receivedConnectionRequests.find(
         (conn) =>
           conn.userId &&
           conn.userId._id === userProfileId &&
-          conn.status_accepted === true
+          conn.status_accepted === true,
       );
 
     if (acceptedConnection) {
@@ -83,9 +85,10 @@ export default function ViewProfilePage({ userProfile }) {
     }
 
     // 2. Check if there is a pending request (in either array)
-    const pendingSent = authState.connections.find(
+    const pendingSent = authState.sentConnectionRequests.find(
       (conn) =>
-        conn.connectionId._id === userProfileId && conn.status_accepted === null
+        conn.connectionId._id === userProfileId &&
+        conn.status_accepted === null,
     );
     if (pendingSent) {
       setIsCurrentUserInConnections(true); // Pending
@@ -93,11 +96,11 @@ export default function ViewProfilePage({ userProfile }) {
       return;
     }
 
-    const pendingReceived = authState.connectionRequests.find(
+    const pendingReceived = authState.receivedConnectionRequests.find(
       (conn) =>
         conn.userId &&
         conn.userId._id === userProfileId &&
-        conn.status_accepted === null
+        conn.status_accepted === null,
     );
     if (pendingReceived) {
       setIsCurrentUserInConnections(true); // Pending
@@ -109,8 +112,8 @@ export default function ViewProfilePage({ userProfile }) {
     setIsCurrentUserInConnections(false);
     setIsConnectionNull(true);
   }, [
-    authState.connections,
-    authState.connectionRequests,
+    authState.sentConnectionRequests,
+    authState.receivedConnectionRequests,
     userProfile.userId._id,
     authState.user?.userId?._id,
   ]);
@@ -173,7 +176,7 @@ export default function ViewProfilePage({ userProfile }) {
                             sendConnectionRequest({
                               token: localStorage.getItem("token"),
                               user_id: userProfile.userId._id,
-                            })
+                            }),
                           );
                         }}
                         className={styles.connectBtn}
@@ -185,11 +188,11 @@ export default function ViewProfilePage({ userProfile }) {
                   <div
                     onClick={async () => {
                       const response = await clientServer.get(
-                        `/user/download_resume?id=${userProfile.userId._id}`
+                        `/user/download_resume?id=${userProfile.userId._id}`,
                       );
                       window.open(
                         `${BASE_URL}/${response.data.message}`,
-                        "_blank"
+                        "_blank",
                       );
                     }}
                     style={{ cursor: "pointer" }}
@@ -338,7 +341,7 @@ export default function ViewProfilePage({ userProfile }) {
                         <p
                           onClick={() => {
                             router.push(
-                              `/view_profile/${post.userId.username}`
+                              `/view_profile/${post.userId.username}`,
                             );
                           }}
                           style={{
@@ -401,7 +404,7 @@ export default function ViewProfilePage({ userProfile }) {
                         <div
                           onClick={async () => {
                             await dispatch(
-                              incrementPostLike({ postId: post._id })
+                              incrementPostLike({ postId: post._id }),
                             );
                             await dispatch(getAllPosts());
                           }}
@@ -426,7 +429,7 @@ export default function ViewProfilePage({ userProfile }) {
                         <div
                           onClick={async () => {
                             await dispatch(
-                              getAllComments({ postId: post._id })
+                              getAllComments({ postId: post._id }),
                             );
                           }}
                           className={styles.singleOption_optionsContainer}
@@ -559,12 +562,12 @@ export default function ViewProfilePage({ userProfile }) {
                                 postComment({
                                   post_id: postState.postId,
                                   body: commentText,
-                                })
+                                }),
                               );
                               await dispatch(
                                 getAllComments({
                                   postId: postState.postId,
-                                })
+                                }),
                               );
                               setCommentText("");
                             }}
@@ -596,7 +599,7 @@ export async function getServerSideProps(context) {
       params: {
         username: context.query.username,
       },
-    }
+    },
   );
 
   const response = await request.data;
