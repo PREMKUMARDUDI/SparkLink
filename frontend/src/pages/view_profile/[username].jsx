@@ -66,12 +66,12 @@ export default function ViewProfilePage({ userProfile }) {
 
     // 1. Check if there is any accepted connection (in either array)
     const acceptedConnection =
-      authState.sentConnectionRequests.find(
+      authState.sentConnectionsRequests?.find(
         (conn) =>
           conn.connectionId._id === userProfileId &&
           conn.status_accepted === true,
       ) ||
-      authState.receivedConnectionRequests.find(
+      authState.receivedConnectionsRequests?.find(
         (conn) =>
           conn.userId &&
           conn.userId._id === userProfileId &&
@@ -85,7 +85,7 @@ export default function ViewProfilePage({ userProfile }) {
     }
 
     // 2. Check if there is a pending request (in either array)
-    const pendingSent = authState.sentConnectionRequests.find(
+    const pendingSent = authState.sentConnectionsRequests?.find(
       (conn) =>
         conn.connectionId._id === userProfileId &&
         conn.status_accepted === null,
@@ -96,7 +96,7 @@ export default function ViewProfilePage({ userProfile }) {
       return;
     }
 
-    const pendingReceived = authState.receivedConnectionRequests.find(
+    const pendingReceived = authState.receivedConnectionsRequests?.find(
       (conn) =>
         conn.userId &&
         conn.userId._id === userProfileId &&
@@ -112,8 +112,8 @@ export default function ViewProfilePage({ userProfile }) {
     setIsCurrentUserInConnections(false);
     setIsConnectionNull(true);
   }, [
-    authState.sentConnectionRequests,
-    authState.receivedConnectionRequests,
+    authState.sentConnectionsRequests,
+    authState.receivedConnectionsRequests,
     userProfile.userId._id,
     authState.user?.userId?._id,
   ]);
