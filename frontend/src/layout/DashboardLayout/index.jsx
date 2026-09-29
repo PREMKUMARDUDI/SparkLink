@@ -5,6 +5,7 @@ import styles from "./style.module.css";
 import { BASE_URL } from "@/config";
 import { getAboutUser, getAllUsers } from "@/config/redux/action/authAction";
 import {
+  reset,
   emptyMessage,
   setTokenIsThere,
   logout,
@@ -17,6 +18,7 @@ export default function DashboardLayout({ children }) {
 
   useEffect(() => {
     if (localStorage.getItem("token") === null) {
+      dispatch(reset());
       dispatch(emptyMessage());
       dispatch(logout());
       router.push("/login");
@@ -32,7 +34,7 @@ export default function DashboardLayout({ children }) {
     };
 
     fetchData();
-  }, []);
+  }, [dispatch, router]);
 
   return (
     <div>
