@@ -1,6 +1,6 @@
 import UserLayout from "@/layout/UserLayout";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./style.module.css";
 import { loginUser, registerUser } from "@/config/redux/action/authAction";
@@ -9,6 +9,9 @@ import { emptyMessage } from "@/config/redux/reducer/authReducer";
 function LoginComponent() {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const emailInputRef = useRef(null);
+  const nameInputRef = useRef(null);
 
   const [userLoginMethod, setUserLoginMethod] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
@@ -31,6 +34,18 @@ function LoginComponent() {
     clearInputFields();
     setShowPassword(false);
     dispatch(emptyMessage());
+
+    if (userLoginMethod) {
+      if (emailInputRef.current) {
+        emailInputRef.current.focus();
+      }
+    } else {
+      setTimeout(() => {
+        if (nameInputRef.current) {
+          nameInputRef.current.focus();
+        }
+      }, 0);
+    }
   }, [userLoginMethod, dispatch]);
 
   useEffect(() => {
@@ -94,6 +109,7 @@ function LoginComponent() {
                       setName(e.target.value);
                     }}
                     value={name}
+                    ref={nameInputRef}
                     type="text"
                     placeholder="Name"
                     className={styles.inputField}
@@ -118,6 +134,7 @@ function LoginComponent() {
                   setEmail(e.target.value);
                 }}
                 value={email}
+                ref={emailInputRef}
                 type="email"
                 placeholder="Email"
                 className={styles.inputField}
