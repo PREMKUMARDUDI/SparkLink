@@ -46,12 +46,18 @@ export default function ProfilePage() {
 
   const handleWorkInputChange = (e) => {
     const { name, value } = e?.target;
-    setInputData({ ...inputData, [name]: value });
+    setInputData((inputData) => ({
+      ...inputData,
+      [name]: value,
+    }));
   };
 
   const handleEducationInputChange = (e) => {
     const { name, value } = e?.target;
-    setEdInputData({ ...edInputData, [name]: value });
+    setEdInputData((edInputData) => ({
+      ...edInputData,
+      [name]: value,
+    }));
   };
 
   const getUserData = async () => {
@@ -172,13 +178,13 @@ export default function ProfilePage() {
                         type="text"
                         value={userProfile.userId.name}
                         onChange={(e) => {
-                          setUserProfile({
+                          setUserProfile((userProfile) => ({
                             ...userProfile,
                             userId: {
                               ...userProfile.userId,
                               name: e.target.value,
                             },
-                          });
+                          }));
                         }}
                       />
                       <input
@@ -186,13 +192,13 @@ export default function ProfilePage() {
                         type="text"
                         value={userProfile.userId.username}
                         onChange={(e) => {
-                          setUserProfile({
+                          setUserProfile((userProfile) => ({
                             ...userProfile,
                             userId: {
                               ...userProfile.userId,
                               username: e.target.value,
                             },
-                          });
+                          }));
                         }}
                       />
                     </div>
@@ -201,10 +207,10 @@ export default function ProfilePage() {
                       <textarea
                         value={userProfile.bio}
                         onChange={(e) => {
-                          setUserProfile({
+                          setUserProfile((userProfile) => ({
                             ...userProfile,
                             bio: e.target.value,
-                          });
+                          }));
                         }}
                         rows={Math.max(
                           3,
@@ -659,10 +665,10 @@ export default function ProfilePage() {
 
               <div
                 onClick={() => {
-                  setUserProfile({
+                  setUserProfile((userProfile) => ({
                     ...userProfile,
                     pastWork: [...userProfile.pastWork, inputData],
-                  });
+                  }));
                   setIsModalOpen(false);
                 }}
                 className={styles.profileUpdateButton}
@@ -712,10 +718,10 @@ export default function ProfilePage() {
 
               <div
                 onClick={() => {
-                  setUserProfile({
+                  setUserProfile((userProfile) => ({
                     ...userProfile,
                     education: [...userProfile.education, edInputData],
-                  });
+                  }));
                   setIsEdModalOpen(false);
                 }}
                 className={styles.profileUpdateButton}
