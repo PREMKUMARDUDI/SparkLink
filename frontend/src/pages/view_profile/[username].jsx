@@ -590,20 +590,32 @@ export default function ViewProfilePage({ userProfile }) {
 }
 
 export async function getServerSideProps(context) {
-  console.log("From View: getServerSideProps");
-  console.log(context.query);
+  console.log("From View: getServerSideProps", context.query);
+  const { username } = context.query;
 
-  const request = await clientServer.get(
-    "/user/get_profile_based_on_username",
-    {
-      params: {
-        username: context.query.username,
-      },
-    },
-  );
+  if (!username) {
+    return { notFound: true };
+  }
 
-  const response = await request.data;
-  console.log(response);
+  try {
+    const res = await clientServer.get("/user/get_profile_based_on_username", {
+      params: { username },
+    });
 
-  return { props: { userProfile: request.data.profile } };
+    const userProfile = res.data?.profile || null;
+
+    if (!userProfile) {
+      return { notFound: true };
+    }
+
+    return {
+      props: { userProfile },
+    };
+  } catch (err) {
+    console.error("Error fetching user profile:", err.message);
+
+    return {
+      props: { userProfile: null, error: "Failed to load profile" },
+    };
+  }
 }
